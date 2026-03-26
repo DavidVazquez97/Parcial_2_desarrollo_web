@@ -1,0 +1,205 @@
+/* ---------- Variables y base ---------- */
+:root{
+  --bg: #f7f7f8;           /* fondo general */
+  --card-bg: #ffffff;      /* fondo de la tarjeta */
+  --text: #222;
+  --muted: #666;
+  --primary: #0a63ff;      /* color del botón */
+  --primary-ink: #fff;
+  --border: #e5e7eb;       /* gris claro para bordes */
+  --radius: 12px;          /* esquinas redondeadas “tarjeta” */
+  --gap: 12px;
+  --label: #2b2b2b;
+  --shadow: 0 6px 20px rgba(0,0,0,0.06);
+  --font: system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial, "Noto Sans", "Apple Color Emoji", "Segoe UI Emoji";
+}
+
+* { box-sizing: border-box; }
+html, body { height: 100%; }
+body{
+  margin: 0;
+  font-family: var(--font);
+  color: var(--text);
+  background: var(--bg);
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+/* ---------- Contenedor tipo “hoja” (como en el PDF) ---------- */
+.form-register{
+  max-width: 720px;
+  margin: clamp(12px, 4vh, 32px) auto;
+  background: var(--card-bg);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  box-shadow: var(--shadow);
+  padding: clamp(16px, 3vw, 32px);
+  display: grid;
+  grid-template-columns: 1fr;     /* móvil: una columna */
+  grid-auto-rows: max-content;
+  gap: var(--gap);
+  position: relative;             /* para posicionar el QR en esquina */
+}
+
+/* ---------- Título ---------- */
+.form-register h2{
+  margin: 0 0 8px 0;
+  font-weight: 700;
+  font-size: clamp(20px, 2.6vw, 28px);
+  text-align: left;
+}
+
+/* ---------- Etiquetas e inputs ---------- */
+.etiquetas{
+  color: var(--label);
+  font-size: 14px;
+  line-height: 1.2;
+  margin-top: 4px;
+}
+
+.controls{
+  width: 100%;
+  padding: 10px 12px;
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  font-size: 15px;
+  background: #fff;
+  color: var(--text);
+  outline: none;
+  transition: border-color .15s, box-shadow .15s, background-color .15s;
+}
+.controls:focus{
+  border-color: #9bbcff;
+  box-shadow: 0 0 0 3px rgba(10, 99, 255, 0.15);
+}
+
+/* ---------- Selects: caret personalizado ---------- */
+select.controls{
+  appearance: none;
+  background-image:
+    linear-gradient(45deg, transparent 50%, #888 50%),
+    linear-gradient(135deg, #888 50%, transparent 50%),
+    linear-gradient(to right, transparent, transparent);
+  background-position:
+    calc(100% - 18px) calc(50% - 4px),
+    calc(100% - 10px) calc(50% - 4px),
+    calc(100% - 36px) 0;
+  background-size: 8px 8px, 8px 8px, 1px 100%;
+  background-repeat: no-repeat;
+}
+
+/* ---------- Botón principal ---------- */
+.boton{
+  margin-top: 8px;
+  padding: 12px 18px;
+  width: 100%;
+  border: 0;
+  border-radius: 10px;
+  background: var(--primary);
+  color: var(--primary-ink);
+  font-weight: 700;
+  font-size: 16px;
+  cursor: pointer;
+  transition: filter .15s, transform .03s, box-shadow .15s;
+}
+.boton:hover{ filter: brightness(0.96); }
+.boton:active{ transform: translateY(1px); }
+
+/* ---------- Bloque de notas (texto) ---------- */
+.texto{
+  margin-top: 8px;
+  color: var(--muted);
+  font-size: 14px;
+  line-height: 1.45;
+  border-top: 1px dashed var(--border);
+  padding-top: 10px;
+}
+
+/* ---------- Imágenes: barras y QR ---------- */
+
+
+.imagenes{
+  display: flex;
+  justify-content: center; /* centra en el eje horizontal */
+  align-items: center;     /* alinea verticalmente */
+  gap: 16px;               /* separación entre imágenes */
+  margin-top: 12px;
+}
+
+/* Mismo tamaño para ambas imágenes */
+.imagenes .codigo_barras,
+.imagenes .codigo_qr{
+  width: 160px;      /* ajusta este valor a tu gusto (150–200px suele verse bien) */
+  height: 160px;     /* mismas dimensiones para que se vean iguales */
+  object-fit: contain;
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  background: #fff;
+}
+
+/* Si tu layout de escritorio usa grid y quieres que las imágenes ocupen todo el ancho: */
+@media (min-width: 720px){
+  .imagenes{
+    grid-column: 1 / -1;  /* hace que el bloque de imágenes abarque las 2 columnas del formulario */
+  }
+}
+
+/* En impresión, que sigan alineadas en una fila */
+@media print {
+  .imagenes{
+    justify-content: center;
+    gap: 12mm;   /* separación cómoda al imprimir */
+  }
+}
+
+
+
+/* ---------- Layout responsive (≥ 720px: 2 columnas) ---------- */
+@media (min-width: 720px){
+  .form-register{
+    grid-template-columns: 1fr 1fr;
+    column-gap: 16px;
+  }
+
+  /* Campos que ocupan todo el ancho en desktop */
+  #nombre, .etiqueta_nombre,
+  .etiqueta_nivel, #nivel,
+  .texto, .boton, .codigo_barras{
+    grid-column: 1 / -1;
+  }
+}
+
+/* ---------- Estado deshabilitado / lectura ---------- */
+.controls[readonly],
+.controls:disabled{
+  background-color: #f3f4f6;
+  color: #555;
+  cursor: not-allowed;
+}
+
+/* ---------- Accesibilidad: focos visibles también con teclado ---------- */
+:focus-visible{ outline: none; }
+.controls:focus-visible{
+  border-color: #6ea2ff;
+  box-shadow: 0 0 0 3px rgba(10, 99, 255, 0.2);
+}
+
+/* ---------- Impresión (para generar PDF del comprobante) ---------- */
+@media print {
+  :root{
+    --bg: #fff;
+    --shadow: none;
+    --border: #cfcfcf;
+  }
+  body{ background: #fff; margin: 0; }
+  .form-register{
+    max-width: 100%;
+    margin: 0;
+    border: 1px solid var(--border);
+    box-shadow: none;
+    border-radius: 0;
+    padding: 18mm;           /* márgenes generosos */
+  }
+  .boton{ display: none !important; } /* no imprimir el botón */
+  .codigo_qr{ border: 0; }
+}

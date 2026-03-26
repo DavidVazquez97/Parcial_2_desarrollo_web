@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <link rel="stylesheet" href="{{url_for('static',filename = 'css/styles.css')}}">
+</head>
+<body>
+
+    <form id="form">
+        <section class="form-register" role="form" aria-labelledby="titulo-turno">
+            <h2 id="titulo-turno">Ticket De Turno</h2>
+
+            <label class="etiquetas etiqueta_nombre" for="nombre">
+                Nombre completo de quién realizará el trámite:
+            </label>
+            <input class="controls" name="nombre" id="nombre" type="text" autocomplete="name" />
+
+            <label class="etiquetas" for="curp">CURP:</label>
+            <input class="controls" type="text" name="curp" id="curp" inputmode="text" />
+
+            <label class="etiquetas" for="nombre1">Nombre:</label>
+            <input class="controls" type="text" name="nombre1" id="nombre1" />
+
+            <label class="etiquetas" for="paterno">Paterno:</label>
+            <input class="controls" type="text" name="paterno" id="paterno" />
+
+            <label class="etiquetas" for="materno">Materno:</label>
+            <input class="controls" type="text" name="materno" id="materno" />
+
+            <label class="etiquetas" for="telefono">Teléfono:</label>
+            <input class="controls" type="tel" name="telefono" id="telefono" inputmode="tel" />
+
+            <label class="etiquetas" for="celular">Celular:</label>
+            <input class="controls" type="tel" name="celular" id="celular" inputmode="tel" />
+
+            <label class="etiquetas" for="correo">Correo:</label>
+            <input class="controls" type="email" name="correo" id="correo"/>
+
+            <label class="etiquetas etiqueta_nivel" for="nivel">
+                ¿Nivel al que desea ingresar o que ya cursa el alumno?
+            </label>
+            <select class="controls" name="nivel" id="nivel">
+                <option value="">Selecciona</option>
+            </select>
+
+            <label class="etiquetas" for="municipio">Municipio:</label>
+            <select class="controls" name="municipio" id="municipio">
+                <option value="">Selecciona</option>
+            </select>
+
+            <label class="etiquetas" for="asunto">Seleccione el asunto que va a tratar:</label>
+            <select class="controls" name="asunto" id="asunto">
+                <option value="">Selecciona</option>
+            </select>
+
+            <button type="submit" class="boton">Generar Turno</button>
+            <p class="warnings" id="warnings"></p>
+
+            <p class="texto">
+                Se requiere un mecanismo de autenticación del documento <br>
+                Se requiere indicar el número de turno <br>
+                Se requiere control por oficina regional <br>
+                Se requiere parametrizar la atención por días <br>
+                Se requiere generar comprobante PDF al usuario <br>
+                Se contempla que la mayoría de usuarios usan móvil
+            </p>
+
+            <div class="imagenes">
+                <img class="codigo_barras" src="{{url_for('static',filename = 'img/barras.jpg')}}" alt="Imagen Codigo de Barras">
+                <img class="codigo_qr" src="{{url_for('static',filename = 'img/qr.jpg')}}" alt="codigo qr">
+            </div>
+            
+
+        </section>
+    </form>
+    <script src="{{url_for('static',filename = 'js/index.js')}}"></script>
+</body>
+</html>
